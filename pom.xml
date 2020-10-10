@@ -8,7 +8,6 @@
         <module>bot_service</module>
         <module>repository</module>
         <module>domain</module>
-        <module>test</module>
     </modules>
 
     <parent>
