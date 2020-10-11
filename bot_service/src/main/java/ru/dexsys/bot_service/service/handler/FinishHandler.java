@@ -11,7 +11,6 @@ import ru.dexsys.domain.service.UserService;
 
 import java.io.Serializable;
 import java.time.Month;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -19,31 +18,22 @@ import java.util.stream.Stream;
 
 @Component
 @Slf4j
-public class SetDayHandler extends AbstractHandler {
-    public SetDayHandler(UserService userService) {
-        super(Command.SET_DAY, userService);
+public class FinishHandler extends AbstractHandler {
+    public FinishHandler(UserService userService) {
+        super(Command.FINISH, userService);
     }
 
     @Override
     public List<PartialBotApiMethod<? extends Serializable>> handle(User user, String userText) {
-        log.info("User {} try to execute command '/set_day'", user.getName());
-        Month monthOfBirth = Month.valueOf(userText.split(" ")[1].toUpperCase());
+        log.info("User {} try to execute command '/finish'", user.getName());
 
-        log.info("Saving month {} of user {}", monthOfBirth.getValue(), user.getName());
-        userService.updateMonth(user.getId(), monthOfBirth.getValue());
-
-        List<String> listOfDays = Stream.iterate(1, n -> n + 1)
-                .limit(monthOfBirth.length(true))
-                .map(Objects::toString)
-                .collect(Collectors.toList());
-        List<List<InlineKeyboardButton>> keyboard = createKeyboard(
-                listOfDays, "finish", 6, 6
-        );
+        int dayOfBirth = Integer.parseInt(userText.split(" ")[1]);
+        log.info("Saving day {} of user {}", dayOfBirth, user.getName());
+        userService.updateDay(user.getId(), dayOfBirth);
 
         SendMessage message = new SendMessage()
                 .setChatId(user.getChatId())
-                .setText("Chose the day of your birthday")
-                .setReplyMarkup(new InlineKeyboardMarkup(keyboard));
+                .setText("Thank you! Now your can relax and wait the congratulations)");
         return List.of(message);
     }
 

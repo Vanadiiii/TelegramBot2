@@ -27,8 +27,12 @@ public class UserService {
         return userDataGateway.findById(id);
     }
 
-    public void updateUser(User user) {
-        userDataGateway.update(user.getId(), user.getBirthday().getDay(), user.getBirthday().getMonth());
+    public void updateDay(Long userid, int day) {
+        userDataGateway.updateDay(userid, day);
+    }
+
+    public void updateMonth(long userId, int month) {
+        userDataGateway.updateMonth(userId, month);
     }
 
     public void removeUser(User user) {

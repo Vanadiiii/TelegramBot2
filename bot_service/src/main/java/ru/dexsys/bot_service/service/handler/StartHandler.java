@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 public class StartHandler extends AbstractHandler {
     public StartHandler(UserService userService) {
-        super(userService);
+        super(Command.START, userService);
     }
 
     @Override
@@ -28,11 +28,6 @@ public class StartHandler extends AbstractHandler {
                 .setChatId(user.getChatId())
                 .setText("Use '/help' command to see all commands");
         return List.of(message1, message2);
-    }
-
-    @Override
-    public Command operationIdentifier() {
-        return Command.START;
     }
 
     @Override

@@ -7,7 +7,9 @@ import java.util.Optional;
 
 public interface UserDataGateway {
 
-    void update(Long id, int day, int month);
+    void updateDay(Long id, int day);
+
+    void updateMonth(Long id, int day);
 
     User save(User user);
 

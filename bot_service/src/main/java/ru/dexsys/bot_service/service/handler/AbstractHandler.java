@@ -1,6 +1,5 @@
 package ru.dexsys.bot_service.service.handler;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.commands.BotCommand;
@@ -13,13 +12,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@RequiredArgsConstructor
 public abstract class AbstractHandler extends BotCommand {
+    protected final Command command;
     protected final UserService userService;
 
-    public abstract List<PartialBotApiMethod<? extends Serializable>> handle(User user, String userText);
+    public AbstractHandler(Command command, UserService userService) {
+        super(command.name().toLowerCase(), command.getDescription());
+        this.command = command;
+        this.userService = userService;
+    }
 
-    public abstract Command operationIdentifier();
+    public abstract List<PartialBotApiMethod<? extends Serializable>> handle(User user, String userText);
 
     public abstract boolean isUserCommand();
 

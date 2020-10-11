@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class SetMonthHandler extends AbstractHandler {
     public SetMonthHandler(UserService userService) {
-        super(userService);
+        super(Command.SET_MONTH, userService);
     }
 
     @Override
@@ -39,11 +39,6 @@ public class SetMonthHandler extends AbstractHandler {
                 .setText("Chose the month of your birthday")
                 .setReplyMarkup(new InlineKeyboardMarkup(keyboard));
         return List.of(message);
-    }
-
-    @Override
-    public Command operationIdentifier() {
-        return Command.SET_MONTH;
     }
 
     @Override

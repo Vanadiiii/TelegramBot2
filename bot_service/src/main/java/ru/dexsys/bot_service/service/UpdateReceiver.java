@@ -1,5 +1,6 @@
 package ru.dexsys.bot_service.service;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -25,30 +26,35 @@ public class UpdateReceiver {
     private Message message;
     private long chatId;
     private User user;
+    private String data;
 
 
     public List<PartialBotApiMethod<? extends Serializable>> handle(Update update) {
         log.info("Bot receive Update");
         try {
+            AbstractHandler handler;
             if (isCommand(update)) {
-                fillReceiverData(update.getMessage());
-                return getHandlerByCommand(message.getText()).handle(user, message.getText());
+                fillDataFromCommand(update);
+                handler = getHandlerByCommand(data);
 
             } else if (update.hasCallbackQuery()) {
-                CallbackQuery callbackQuery = update.getCallbackQuery();
-                fillReceiverData(callbackQuery.getMessage());
-                return getHandlerByCallBackQuery(callbackQuery.getData()).handle(user, callbackQuery.getData());
+                fillDataFromCallback(update);
+                handler = getHandlerByCallBackQuery(data);
+            } else {
+                throw new UnsupportedOperationException();
             }
+            return handler.handle(user, data);
         } catch (UnsupportedOperationException e) {
             log.info("User {} try to execute unsupported operation", user.getName());
         }
         return List.of(new SendMessage(chatId, "Unsupported operation. Use /help to see all commands"));
     }
 
-    private void fillReceiverData(Message message) {
-        this.message = message;
+    private void fillDataFromCommand(Update update) {
+        this.message = update.getMessage();
         chatId = message.getChatId();
         var botUser = message.getFrom();
+        data = message.getText();
         user = userService
                 .getUser(botUser.getId())
                 .orElseGet(() ->
@@ -56,18 +62,31 @@ public class UpdateReceiver {
                 );
     }
 
-    private AbstractHandler getHandlerByCallBackQuery(String query) {
+    private void fillDataFromCallback(Update update) {
+        CallbackQuery callback = update.getCallbackQuery();
+        this.message = callback.getMessage();
+        chatId = message.getChatId();
+        var botUser = callback.getFrom();
+        data = callback.getData();
+        user = userService
+                .getUser(botUser.getId())
+                .orElseGet(() ->
+                        userService.save(new User(botUser.getId(), botUser.getUserName(), chatId))
+                );
+    }
+
+    private AbstractHandler getHandlerByCallBackQuery(@NonNull String query) {
         return handlers.stream()
                 .filter(handler -> !handler.isUserCommand())
-                .filter(handler -> handler.operationIdentifier().toString().startsWith(query))
+                .filter(handler -> query.contains(handler.getCommand()))
                 .findAny()
                 .orElseThrow(UnsupportedOperationException::new);
     }
 
-    private AbstractHandler getHandlerByCommand(String command) {
+    private AbstractHandler getHandlerByCommand(@NonNull String command) {
         return handlers.stream()
                 .filter(AbstractHandler::isUserCommand)
-                .filter(handler -> handler.operationIdentifier().toString().startsWith(command))
+                .filter(handler -> command.contains(handler.getCommand()))
                 .findFirst()
                 .orElseThrow(UnsupportedOperationException::new);
     }

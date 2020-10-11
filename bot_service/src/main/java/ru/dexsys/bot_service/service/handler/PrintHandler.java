@@ -8,23 +8,32 @@ import ru.dexsys.domain.entity.User;
 import ru.dexsys.domain.service.UserService;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @Slf4j
-public class HelpHandler extends AbstractHandler {
-    public HelpHandler(UserService userService) {
-        super(Command.HELP, userService);
+public class PrintHandler extends AbstractHandler {
+    public PrintHandler(UserService userService) {
+        super(Command.PRINT, userService);
     }
 
     @Override
     public List<PartialBotApiMethod<? extends Serializable>> handle(User user, String userText) {
-        log.info("User {} try to execute command '/help'", user.getName());
+        log.info("User {} try to execute command '/print'", user.getName());
+
         SendMessage message = new SendMessage()
                 .setChatId(user.getChatId())
-                .setText("Available command for you is '/birthday' to set birthday");
-        return List.of(message);
+                .setText("There are all users:");
+        SendMessage usersInfo = new SendMessage()
+                .setChatId(user.getChatId())
+                .setText(
+                        userService.getUsers()
+                                .stream()
+                                .map(User::toString)
+                                .collect(Collectors.joining(";"))
+                );
+        return List.of(message, usersInfo);
     }
 
     @Override

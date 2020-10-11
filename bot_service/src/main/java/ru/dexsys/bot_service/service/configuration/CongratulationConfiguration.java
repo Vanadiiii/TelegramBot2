@@ -4,12 +4,11 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-@Component
-@ConfigurationProperties(prefix = "bot")
-@Data
-public class BotConfiguration {
-    private String name;
-    private String token;
-    private CongratulationConfiguration notification;
-}
+import java.time.LocalTime;
 
+@Component
+@ConfigurationProperties(prefix = "congratulation")
+@Data
+public class CongratulationConfiguration {
+    private LocalTime time;
+}

@@ -15,11 +15,27 @@ public class UserDataGatewayStab implements UserDataGateway {
     private final List<User> testStorage = new ArrayList<>();
 
     @Override
-    public void update(Long id, int day, int month) {
-        Birthday birthday = new Birthday(day, month);
-        findById(id)
-                .orElseThrow()
-                .setBirthday(birthday);
+    public void updateDay(Long id, int day) {
+        User user = findById(id)
+                .orElseThrow(() -> new RuntimeException("There are no user " + id + " in repository"));
+
+        Optional.ofNullable(user.getBirthday())
+                .ifPresentOrElse(
+                        birthday -> birthday.setDay(day),
+                        () -> user.setBirthday(new Birthday(day, null))
+                );
+    }
+
+    @Override
+    public void updateMonth(Long id, int month) {
+        User user = findById(id)
+                .orElseThrow(() -> new RuntimeException("There are no user " + id + " in repository"));
+
+        Optional.ofNullable(user.getBirthday())
+                .ifPresentOrElse(
+                        birthday -> birthday.setMonth(month),
+                        () -> user.setBirthday(new Birthday(null, month))
+                );
     }
 
     @Override

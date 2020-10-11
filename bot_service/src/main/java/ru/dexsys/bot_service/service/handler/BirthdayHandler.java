@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 public class BirthdayHandler extends AbstractHandler {
     public BirthdayHandler(UserService userService) {
-        super(userService);
+        super(Command.BIRTHDAY, userService);
     }
 
     @Override
@@ -26,13 +26,9 @@ public class BirthdayHandler extends AbstractHandler {
 
         SendMessage message = new SendMessage()
                 .setChatId(user.getChatId())
+                .setText("Start saving birthday process")
                 .setReplyMarkup(new InlineKeyboardMarkup(keyboard));
         return List.of(message);
-    }
-
-    @Override
-    public Command operationIdentifier() {
-        return Command.BIRTHDAY;
     }
 
     @Override
