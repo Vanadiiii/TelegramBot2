@@ -19,7 +19,7 @@ public abstract class AbstractHandler extends BotCommand {
 
     public abstract List<PartialBotApiMethod<? extends Serializable>> handle(User user, String userText);
 
-    public abstract String operationIdentifier();
+    public abstract Command operationIdentifier();
 
     public abstract boolean isUserCommand();
 
