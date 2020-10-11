@@ -13,26 +13,23 @@ import java.util.List;
 
 @Component
 @Slf4j
-public class StartHandler extends AbstractHandler {
-    public StartHandler(UserService userService) {
+public class HelpHandler extends AbstractHandler {
+    public HelpHandler(UserService userService) {
         super(userService);
     }
 
     @Override
     public List<PartialBotApiMethod<? extends Serializable>> handle(User user, String userText) {
-        log.info("User {} try to execute command '/start'", user.getName());
-        SendMessage message1 = new SendMessage()
+        log.info("User {} try to execute command '/help'", user.getName());
+        SendMessage message = new SendMessage()
                 .setChatId(user.getChatId())
-                .setText("Hello! It's HappyBirthdayBot!\nI'll save your birthday and congratulate you)");
-        SendMessage message2 = new SendMessage()
-                .setChatId(user.getChatId())
-                .setText("Use '/help' command to see all commands");
-        return List.of(message1, message2);
+                .setText("Available command for you is '/birthday' to set birthday");
+        return List.of(message);
     }
 
     @Override
     public Command operationIdentifier() {
-        return Command.START;
+        return Command.HELP;
     }
 
     @Override

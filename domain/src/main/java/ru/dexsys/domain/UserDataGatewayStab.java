@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Component
 @Slf4j
-public class UserDataGatewayImpl implements UserDataGateway {
+public class UserDataGatewayStab implements UserDataGateway {
     private final List<User> testStorage = new ArrayList<>();
 
     @Override

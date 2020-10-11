@@ -8,6 +8,7 @@
         <module>bot_service</module>
         <module>repository</module>
         <module>domain</module>
+        <module>google_doc</module>
     </modules>
 
     <parent>
@@ -36,6 +37,10 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
         </dependency>
     </dependencies>
 

@@ -41,14 +41,12 @@ public class SetDayHandler extends AbstractHandler {
                 .setChatId(user.getChatId())
                 .setText("Chose the day of your birthday")
                 .setReplyMarkup(new InlineKeyboardMarkup(keyboard));
-        return new ArrayList<>() {{
-            this.add(message);
-        }};
+        return List.of(message);
     }
 
     @Override
-    public String operationIdentifier() {
-        return "/set_day";
+    public Command operationIdentifier() {
+        return Command.SET_DAY;
     }
 
     @Override

@@ -11,7 +11,7 @@ import ru.dexsys.domain.entity.User;
 @Repository
 @Transactional
 public interface UserDataRepository extends UserDataGateway, JpaRepository<User, Long> {
-    @Query("update USERS U set U.day = ?2, U.month = ?3 where U.id = ?1")
+    @Query("UPDATE users u SET u.day = ?2, u.month = ?3 WHERE u.id = ?1")
     @Modifying
     void update(Long id, int day, int month);
 }

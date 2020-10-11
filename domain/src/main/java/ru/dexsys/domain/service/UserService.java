@@ -2,7 +2,6 @@ package ru.dexsys.domain.service;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 import ru.dexsys.domain.UserDataGateway;
 import ru.dexsys.domain.entity.User;

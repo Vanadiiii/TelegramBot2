@@ -31,8 +31,8 @@ public class BirthdayHandler extends AbstractHandler {
     }
 
     @Override
-    public String operationIdentifier() {
-        return "/birthday";
+    public Command operationIdentifier() {
+        return Command.BIRTHDAY;
     }
 
     @Override

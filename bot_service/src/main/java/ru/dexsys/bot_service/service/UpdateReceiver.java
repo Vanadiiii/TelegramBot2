@@ -28,6 +28,7 @@ public class UpdateReceiver {
 
 
     public List<PartialBotApiMethod<? extends Serializable>> handle(Update update) {
+        log.info("Bot receive Update");
         try {
             if (isCommand(update)) {
                 fillReceiverData(update.getMessage());
@@ -58,7 +59,7 @@ public class UpdateReceiver {
     private AbstractHandler getHandlerByCallBackQuery(String query) {
         return handlers.stream()
                 .filter(handler -> !handler.isUserCommand())
-                .filter(handler -> handler.operationIdentifier().startsWith(query))
+                .filter(handler -> handler.operationIdentifier().toString().startsWith(query))
                 .findAny()
                 .orElseThrow(UnsupportedOperationException::new);
     }
@@ -66,7 +67,7 @@ public class UpdateReceiver {
     private AbstractHandler getHandlerByCommand(String command) {
         return handlers.stream()
                 .filter(AbstractHandler::isUserCommand)
-                .filter(handler -> handler.operationIdentifier().startsWith(command))
+                .filter(handler -> handler.operationIdentifier().toString().startsWith(command))
                 .findFirst()
                 .orElseThrow(UnsupportedOperationException::new);
     }

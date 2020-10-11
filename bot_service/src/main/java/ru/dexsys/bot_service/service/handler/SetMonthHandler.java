@@ -42,8 +42,8 @@ public class SetMonthHandler extends AbstractHandler {
     }
 
     @Override
-    public String operationIdentifier() {
-        return "/set_month";
+    public Command operationIdentifier() {
+        return Command.SET_MONTH;
     }
 
     @Override
