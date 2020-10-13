@@ -9,6 +9,7 @@ import org.telegram.telegrambots.bots.DefaultBotOptions;
 @ConfigurationProperties(prefix = "proxy")
 @Data
 public class ProxyConfiguration {
+    private boolean enable;
     private String host;
     private int port;
     private DefaultBotOptions.ProxyType type;

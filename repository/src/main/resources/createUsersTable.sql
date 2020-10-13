@@ -2,7 +2,7 @@ CREATE TABLE USERS2
 (
     id      SERIAL PRIMARY KEY,
     chat_id INTEGER NOT NULL,
-    name    VARCHAR(40),
+    name    VARCHAR(50) NULL,
     day     INTEGER NULL,
     month   INTEGER NULL,
     CONSTRAINT day_check CHECK ( day BETWEEN 1 AND 31),

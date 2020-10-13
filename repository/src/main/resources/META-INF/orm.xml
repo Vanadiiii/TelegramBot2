@@ -8,18 +8,19 @@ http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
     <package>ru.dexsys.domain.entity</package>
     <entity class="User">
         <table name="USERS"/>
+
         <attributes>
             <id name="id">
-                <generated-value strategy="AUTO"/>
+                <column updatable="false" insertable="true" name="id"/>
             </id>
             <basic name="chatId"/>
-            <basic name="name"/>
+            <basic name="name" optional="true"/>
             <embedded name="birthday">
                 <attribute-override name="day">
-                    <column name="DAY" nullable="true"/>
+                    <column name="day" nullable="true"/>
                 </attribute-override>
                 <attribute-override name="month">
-                    <column column-definition="MONTH" nullable="true"/>
+                    <column name="month" nullable="true"/>
                 </attribute-override>
             </embedded>
         </attributes>

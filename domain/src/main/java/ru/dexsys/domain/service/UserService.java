@@ -20,11 +20,11 @@ public class UserService {
     }
 
     public List<User> getUsers() {
-        return userDataGateway.findAll();
+        return userDataGateway.find();
     }
 
     public Optional<User> getUser(long id) {
-        return userDataGateway.findById(id);
+        return userDataGateway.find(id);
     }
 
     public void updateDay(Long userid, int day) {
