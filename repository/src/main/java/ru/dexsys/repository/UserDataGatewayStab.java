@@ -1,7 +1,9 @@
 package ru.dexsys.repository;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import ru.dexsys.domain.UserDataGateway;
 import ru.dexsys.domain.entity.Birthday;
 import ru.dexsys.domain.entity.User;
@@ -10,8 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-//@Component
+@Repository
 @Slf4j
+@ConditionalOnProperty(value = "repository.type", havingValue = "stab")
 public class UserDataGatewayStab implements UserDataGateway {
     private final List<User> testStorage = new ArrayList<>();
 
@@ -63,3 +66,5 @@ public class UserDataGatewayStab implements UserDataGateway {
         testStorage.remove(user);
     }
 }
+
+
