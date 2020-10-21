@@ -9,4 +9,4 @@ proxy:
   port: 9150
   type: SOCKS4
 repository:
-  type: stab
+  type: jpa

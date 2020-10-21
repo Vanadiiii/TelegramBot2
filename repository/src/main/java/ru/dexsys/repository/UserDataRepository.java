@@ -1,6 +1,7 @@
 package ru.dexsys.repository;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -19,6 +20,7 @@ import java.util.Optional;
 @Repository
 @Transactional
 @Primary
+@Lazy
 @ConditionalOnProperty(value = "repository.type", havingValue = "jpa")
 public interface UserDataRepository extends UserDataGateway, JpaRepository<User, Long> {
     @Override
