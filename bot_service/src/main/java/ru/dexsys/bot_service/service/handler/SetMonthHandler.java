@@ -6,7 +6,7 @@ import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-import ru.dexsys.domain.entity.User;
+import ru.dexsys.domain.entity.UserEntity;
 import ru.dexsys.domain.service.UserService;
 
 import java.io.Serializable;
@@ -23,7 +23,7 @@ public class SetMonthHandler extends AbstractHandler {
     }
 
     @Override
-    public List<PartialBotApiMethod<? extends Serializable>> handle(User user, String userText) {
+    public List<PartialBotApiMethod<? extends Serializable>> handle(UserEntity user, String userText) {
         log.info("User {} try to execute command '/set_month'", user.getName());
 
         List<String> listOfMonth = EnumSet.allOf(Month.class)

@@ -6,7 +6,7 @@ http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
                  version="1.0">
     <description>My First JPA XML Application</description>
     <package>ru.dexsys.domain.entity</package>
-    <entity class="User">
+    <entity class="ru.dexsys.domain.entity.UserEntity">
         <table name="USERS"/>
 
         <attributes>

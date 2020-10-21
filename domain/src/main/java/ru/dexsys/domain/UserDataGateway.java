@@ -1,7 +1,7 @@
 package ru.dexsys.domain;
 
 import org.springframework.stereotype.Component;
-import ru.dexsys.domain.entity.User;
+import ru.dexsys.domain.entity.UserEntity;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,11 +13,11 @@ public interface UserDataGateway {
 
     void updateMonth(Long id, int day);
 
-    User save(User user);
+    UserEntity save(UserEntity userEntity);
 
-    List<User> find();
+    List<UserEntity> find();
 
-    Optional<User> find(long id);
+    Optional<UserEntity> find(long id);
 
-    void delete(User user);
+    void delete(UserEntity userEntity);
 }

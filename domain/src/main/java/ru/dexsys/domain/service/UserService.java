@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.dexsys.domain.UserDataGateway;
-import ru.dexsys.domain.entity.User;
+import ru.dexsys.domain.entity.UserEntity;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,15 +15,15 @@ import java.util.Optional;
 public class UserService {
     private final UserDataGateway userDataGateway;
 
-    public User save(User user) {
-        return userDataGateway.save(user);
+    public UserEntity save(UserEntity userEntity) {
+        return userDataGateway.save(userEntity);
     }
 
-    public List<User> getUsers() {
+    public List<UserEntity> getUsers() {
         return userDataGateway.find();
     }
 
-    public Optional<User> getUser(long id) {
+    public Optional<UserEntity> getUser(long id) {
         return userDataGateway.find(id);
     }
 
@@ -35,7 +35,7 @@ public class UserService {
         userDataGateway.updateMonth(userId, month);
     }
 
-    public void removeUser(User user) {
-        userDataGateway.delete(user);
+    public void removeUser(UserEntity userEntity) {
+        userDataGateway.delete(userEntity);
     }
 }
