@@ -46,5 +46,7 @@ public interface UserDataRepository extends UserDataGateway, JpaRepository<UserE
     }
 
     @Override
-    void delete(UserEntity userEntity);
+    default void delete(Long id) {
+        deleteById(id);
+    }
 }
