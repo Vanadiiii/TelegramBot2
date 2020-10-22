@@ -43,6 +43,10 @@
             <groupId>ru.dexsys</groupId>
             <artifactId>repository</artifactId>
         </dependency>
+        <dependency>
+            <groupId>ru.dexsys</groupId>
+            <artifactId>rest_service</artifactId>
+        </dependency>
     </dependencies>
     <properties>
         <telegram.version>4.9.1</telegram.version>

@@ -21,7 +21,10 @@ public class PrintHandler extends AbstractHandler {
     @Override
     public List<PartialBotApiMethod<? extends Serializable>> handle(UserEntity user, String userText) {
         log.info("User {} try to execute command '/print'", user.getName());
-
+        if (!userService.hasUser(user)) {
+            userService.save(user);
+            log.info("User #" + user.getId() + " was saved into storage");
+        }
         SendMessage message = new SendMessage()
                 .setChatId(user.getChatId())
                 .setText("There are all users:");

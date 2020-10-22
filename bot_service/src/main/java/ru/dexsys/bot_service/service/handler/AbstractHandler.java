@@ -34,10 +34,10 @@ public abstract class AbstractHandler extends BotCommand {
         return Stream.iterate(0, n -> n + 1)
                 .limit(high)
                 .map(n -> Stream
-                        .iterate(n + n * (width - 1) + 1, m -> m + 1)
+                        .iterate(n + n * (width - 1), m -> m + 1)
                         .limit(width)
-                        .filter(m -> m <= elements.size())
-                        .map(String::valueOf)
+                        .filter(m -> m < elements.size())
+                        .map(elements::get)
                         .map(InlineKeyboardButton::new)
                         .peek(button -> button.setCallbackData(buttonCommand + " " + button.getText()))
                         .collect(Collectors.toList())

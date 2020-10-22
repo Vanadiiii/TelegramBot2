@@ -36,12 +36,12 @@ public interface UserDataRepository extends UserDataGateway, JpaRepository<UserE
     UserEntity save(UserEntity userEntity);
 
     @Override
-    default List<UserEntity> find() {
+    default List<UserEntity> getUsers() {
         return findAll();
     }
 
     @Override
-    default Optional<UserEntity> find(long id) {
+    default Optional<UserEntity> getUserById(long id) {
         return findById(id);
     }
 

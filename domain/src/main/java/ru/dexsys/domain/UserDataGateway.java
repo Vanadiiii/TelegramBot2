@@ -15,9 +15,9 @@ public interface UserDataGateway {
 
     UserEntity save(UserEntity userEntity);
 
-    List<UserEntity> find();
+    List<UserEntity> getUsers();
 
-    Optional<UserEntity> find(long id);
+    Optional<UserEntity> getUserById(long id);
 
-    void delete(UserEntity userEntity);
+    void delete(Long id);
 }

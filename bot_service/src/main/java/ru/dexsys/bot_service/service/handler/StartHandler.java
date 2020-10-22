@@ -20,6 +20,10 @@ public class StartHandler extends AbstractHandler {
     @Override
     public List<PartialBotApiMethod<? extends Serializable>> handle(UserEntity user, String userText) {
         log.info("User {} try to execute command '/start'", user.getName());
+        if (!userService.hasUser(user)) {
+            userService.save(user);
+            log.info("User #" + user.getId() + " was saved into storage");
+        }
         SendMessage message1 = new SendMessage()
                 .setChatId(user.getChatId())
                 .setText("Hello! It's HappyBirthdayBot!\nI'll save your birthday and congratulate you)");

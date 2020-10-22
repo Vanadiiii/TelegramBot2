@@ -20,11 +20,11 @@ public class UserService {
     }
 
     public List<UserEntity> getUsers() {
-        return userDataGateway.find();
+        return userDataGateway.getUsers();
     }
 
     public Optional<UserEntity> getUser(long id) {
-        return userDataGateway.find(id);
+        return userDataGateway.getUserById(id);
     }
 
     public void updateDay(Long userid, int day) {
@@ -35,7 +35,11 @@ public class UserService {
         userDataGateway.updateMonth(userId, month);
     }
 
-    public void removeUser(UserEntity userEntity) {
-        userDataGateway.delete(userEntity);
+    public void removeUser(Long id) {
+        userDataGateway.delete(id);
+    }
+
+    public boolean hasUser(UserEntity user) {
+        return userDataGateway.getUserById(user.getId()).isPresent();
     }
 }

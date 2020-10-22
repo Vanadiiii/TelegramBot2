@@ -9,6 +9,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.dexsys.bot_service.service.handler.AbstractHandler;
 import ru.dexsys.domain.entity.UserEntity;
+import ru.dexsys.domain.service.UserService;
 
 import java.io.Serializable;
 import java.util.List;
@@ -22,7 +23,7 @@ public class UpdateReceiver {
     private UserEntity user;
 
     public List<PartialBotApiMethod<? extends Serializable>> handle(Update update) {
-        log.info("Bot receive Update");
+        log.debug("Bot receive Update");
         try {
             if (isCommand(update)) {
                 user = UserEntity.builder()
@@ -35,13 +36,12 @@ public class UpdateReceiver {
 
             } else if (update.hasCallbackQuery()) {
                 user = UserEntity.builder()
-                        .id((long) update.getCallbackQuery().getMessage().getFrom().getId())
+                        .id((long) update.getCallbackQuery().getFrom().getId())
                         .chatId(update.getCallbackQuery().getMessage().getChatId())
-                        .name(update.getCallbackQuery().getMessage().getFrom().getUserName())
+                        .name(update.getCallbackQuery().getFrom().getUserName())
                         .build();
                 String data = update.getCallbackQuery().getData();
-                getHandlerByCallBackQuery(data).handle(user, data);
-
+                return getHandlerByCallBackQuery(data).handle(user, data);
             } else {
                 throw new UnsupportedOperationException();
             }

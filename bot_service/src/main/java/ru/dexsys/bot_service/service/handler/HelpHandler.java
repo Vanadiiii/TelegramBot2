@@ -20,6 +20,10 @@ public class HelpHandler extends AbstractHandler {
     @Override
     public List<PartialBotApiMethod<? extends Serializable>> handle(UserEntity user, String userText) {
         log.info("User {} try to execute command '/help'", user.getName());
+        if (!userService.hasUser(user)) {
+            userService.save(user);
+            log.info("User #" + user.getId() + " was saved into storage");
+        }
         SendMessage message = new SendMessage()
                 .setChatId(user.getChatId())
                 .setText("Available command for you is '/birthday' to set birthday");

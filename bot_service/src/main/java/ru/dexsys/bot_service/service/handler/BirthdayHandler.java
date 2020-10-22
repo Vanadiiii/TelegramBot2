@@ -21,6 +21,10 @@ public class BirthdayHandler extends AbstractHandler {
     @Override
     public List<PartialBotApiMethod<? extends Serializable>> handle(UserEntity user, String userText) {
         log.info("User {} try to execute command '/birthday'", user.getName());
+        if (!userService.hasUser(user)) {
+            userService.save(user);
+            log.info("User #" + user.getId() + " was saved into storage");
+        }
 
         var keyboard = createKeyboard("Save your birthday", "set_month");
 
