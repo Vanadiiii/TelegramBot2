@@ -14,7 +14,7 @@ import java.util.List;
 @Slf4j
 public class InfoHandler extends AbstractHandler {
     public InfoHandler(UserService userService) {
-        super(Command.HELP, userService);
+        super(Command.INFO, userService);
     }
 
     @Override
