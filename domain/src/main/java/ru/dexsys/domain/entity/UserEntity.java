@@ -20,4 +20,14 @@ public class UserEntity {
         this.name = name;
         this.chatId = chatId;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id = " + id +
+                ", name = '" + name + '\'' +
+                ", chatId = " + chatId +
+                ", birthday = " + birthday +
+                '}';
+    }
 }

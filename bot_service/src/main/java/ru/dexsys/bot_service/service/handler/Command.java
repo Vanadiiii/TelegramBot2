@@ -13,6 +13,7 @@ public enum Command {
     SET_MONTH("save your birthday month"),
     FINISH("finish the birthday saving process"),
     PRINT("print all users"),
+    INFO("show your info"),
     ;
 
     private final String description;
