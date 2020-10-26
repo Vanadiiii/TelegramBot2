@@ -1,4 +1,4 @@
-package ru.dexsys;
+package ru.dexsys.exception;
 
 public class NoSuchUserException extends RuntimeException {
     public NoSuchUserException() {

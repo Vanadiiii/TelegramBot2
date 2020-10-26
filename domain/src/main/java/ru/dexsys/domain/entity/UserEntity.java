@@ -1,9 +1,6 @@
 package ru.dexsys.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @Builder
@@ -29,5 +26,23 @@ public class UserEntity {
                 ", chatId = " + chatId +
                 ", birthday = " + birthday +
                 '}';
+    }
+
+    public UserEntity setDay(@NonNull int day) {
+        if (this.getBirthday() != null) {
+            this.getBirthday().setDay(day);
+        } else {
+            this.setBirthday(new Birthday(day, null));
+        }
+        return this;
+    }
+
+    public UserEntity setMonth(@NonNull int month) {
+        if (this.getBirthday() != null) {
+            this.getBirthday().setMonth(month);
+        } else {
+            this.setBirthday(new Birthday(null, month));
+        }
+        return this;
     }
 }
