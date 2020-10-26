@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar bot_service/target/dependency/webapp-runner.jar --port $PORT bot_service/target/*.war
+web: java $JAVA_OPTS -jar bot_service/target/bot_service-0.0.1-SNAPSHOT.war --port $PORT --illegal-access=warn
