@@ -7,6 +7,8 @@ proxy:
   enable: false
   host: 127.0.0.1
   port: 9150
-  type: SOCKS4
+  type: socks4
 repository:
   type: jpa
+user-client:
+  isMock: false

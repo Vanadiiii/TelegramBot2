@@ -7,9 +7,8 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.dexsys.bot_service.service.handler.AbstractHandler;
+import ru.dexsys.bot_service.service.handler_impl.AbstractHandler;
 import ru.dexsys.domain.entity.UserEntity;
-import ru.dexsys.domain.service.UserService;
 
 import java.io.Serializable;
 import java.util.List;
@@ -34,6 +33,15 @@ public class UpdateReceiver {
                 String data = update.getMessage().getText();
                 return getHandlerByCommand(data).handle(user, data);
 
+            } else if (update.hasMessage() && update.getMessage().hasContact()) {
+                user = UserEntity.builder()
+                        .id((long) update.getMessage().getFrom().getId())
+                        .chatId(update.getMessage().getChatId())
+                        .name(update.getMessage().getFrom().getUserName())
+                        .build();
+                String data = update.getMessage().getContact().getPhoneNumber();
+                return getHandlerForSavingContact().handle(user, data);
+
             } else if (update.hasCallbackQuery()) {
                 user = UserEntity.builder()
                         .id((long) update.getCallbackQuery().getFrom().getId())
@@ -49,6 +57,13 @@ public class UpdateReceiver {
             log.info("User {} try to execute unsupported operation", user.getName());
         }
         return List.of(new SendMessage(user.getChatId(), "Unsupported operation. Use /help to see all commands"));
+    }
+
+    private AbstractHandler getHandlerForSavingContact() {
+        return handlers.stream()
+                .filter(handler -> handler.getCommand().equals("save_phone"))
+                .findFirst()
+                .orElseThrow();
     }
 
     private AbstractHandler getHandlerByCommand(@NonNull String command) {

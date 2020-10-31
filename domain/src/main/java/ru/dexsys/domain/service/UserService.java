@@ -27,7 +27,7 @@ public class UserService {
         return userDataGateway.getUserById(id);
     }
 
-    public void updateDay(Long userid, int day) {
+    public void updateDay(long userid, int day) {
         userDataGateway.updateDay(userid, day);
     }
 
@@ -35,7 +35,11 @@ public class UserService {
         userDataGateway.updateMonth(userId, month);
     }
 
-    public void removeUser(Long id) {
+    public void updatePhone(long userId, String phone) {
+        userDataGateway.updatePhone(userId, phone);
+    }
+
+    public void removeUser(long id) {
         userDataGateway.delete(id);
     }
 

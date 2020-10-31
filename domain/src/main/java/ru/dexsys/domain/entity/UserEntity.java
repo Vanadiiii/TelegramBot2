@@ -11,6 +11,7 @@ public class UserEntity {
     private String name;
     private Long chatId;
     private Birthday birthday;
+    private String phone;
 
     public UserEntity(long id, String name, long chatId) {
         this.id = id;
@@ -25,6 +26,7 @@ public class UserEntity {
                 ", name = '" + name + '\'' +
                 ", chatId = " + chatId +
                 ", birthday = " + birthday +
+                ", phone = '" + phone + '\'' +
                 '}';
     }
 

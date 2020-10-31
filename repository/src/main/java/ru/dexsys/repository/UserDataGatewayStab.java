@@ -8,7 +8,6 @@ import ru.dexsys.domain.entity.Birthday;
 import ru.dexsys.domain.entity.UserEntity;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Repository
 @Slf4j
@@ -67,6 +66,16 @@ public class UserDataGatewayStab implements UserDataGateway {
         if (storage.containsKey(id)) {
             UserEntity user = storage.get(id);
             storage.remove(id, user);
+        }
+    }
+
+    @Override
+    public void updatePhone(long id, String phone) {
+        if (storage.containsKey(id)) {
+            storage.get(id).setPhone(phone);
+        } else {
+            log.error("There are no user #" + id + " in repository for saving phone - " + phone);
+            throw new RuntimeException("There are no user #" + id + " in repository");
         }
     }
 }

@@ -33,6 +33,11 @@ public interface UserDataRepository extends UserDataGateway, JpaRepository<UserE
     void updateMonth(@Param("id") Long id, @Param("month") int month);
 
     @Override
+    @Modifying
+    @Query("update UserEntity u set u.phone = :phone where u.id = :id")
+    void updatePhone(@Param("id") long userId, @Param("phone") String phone);
+
+    @Override
     UserEntity save(UserEntity userEntity);
 
     @Override

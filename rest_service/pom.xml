@@ -7,10 +7,13 @@
         <groupId>ru.dexsys</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
 
     <properties>
         <mapstruct.version>1.4.1.Final</mapstruct.version>
+        <skip.assembly>false</skip.assembly>
+        <swagger2.version>${swagger.version}</swagger2.version>
     </properties>
 
     <artifactId>rest_service</artifactId>
@@ -28,6 +31,10 @@
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
             <version>${mapstruct.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
         </dependency>
     </dependencies>
 

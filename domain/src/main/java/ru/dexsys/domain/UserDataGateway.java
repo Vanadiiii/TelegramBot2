@@ -20,4 +20,6 @@ public interface UserDataGateway {
     Optional<UserEntity> getUserById(long id);
 
     void delete(Long id);
+
+    void updatePhone(long userId, String phone);
 }
