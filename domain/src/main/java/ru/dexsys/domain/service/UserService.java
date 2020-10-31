@@ -46,4 +46,8 @@ public class UserService {
     public boolean hasUser(UserEntity user) {
         return userDataGateway.getUserById(user.getId()).isPresent();
     }
+
+    public boolean hasUser(long userId) {
+        return userDataGateway.getUserById(userId).isPresent();
+    }
 }
