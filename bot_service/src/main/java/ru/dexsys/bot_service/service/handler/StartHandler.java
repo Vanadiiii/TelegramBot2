@@ -1,4 +1,4 @@
-package ru.dexsys.bot_service.service.handler_impl;
+package ru.dexsys.bot_service.service.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -9,34 +9,28 @@ import ru.dexsys.domain.service.UserService;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 @Slf4j
-public class PrintHandler extends AbstractHandler {
-    public PrintHandler(UserService userService) {
-        super(Command.PRINT, userService);
+public class StartHandler extends AbstractHandler {
+    public StartHandler(UserService userService) {
+        super(Command.START, userService);
     }
 
     @Override
     public List<PartialBotApiMethod<? extends Serializable>> handle(UserEntity user, String userText) {
-        log.info("User {} try to execute command '/print'", user.getName());
+        log.info("User {} try to execute command '/start'", user.getName());
         if (!userService.hasUser(user)) {
             userService.save(user);
             log.info("User #" + user.getId() + " was saved into storage");
         }
-        SendMessage message = new SendMessage()
+        SendMessage message1 = new SendMessage()
                 .setChatId(user.getChatId())
-                .setText("There are all users:");
-        SendMessage usersInfo = new SendMessage()
+                .setText("Hello! It's HappyBirthdayBot!\nI'll save your birthday and congratulate you)");
+        SendMessage message2 = new SendMessage()
                 .setChatId(user.getChatId())
-                .setText(
-                        userService.getUsers()
-                                .stream()
-                                .map(UserEntity::toString)
-                                .collect(Collectors.joining(";\n\n"))
-                );
-        return List.of(message, usersInfo);
+                .setText("Use '/help' command to see all commands");
+        return List.of(message1, message2);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package ru.dexsys.bot_service.service;
+package ru.dexsys.bot_service.service.update_receiver;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -7,7 +7,8 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.dexsys.bot_service.service.handler_impl.AbstractHandler;
+import ru.dexsys.bot_service.service.IUpdateReceiver;
+import ru.dexsys.bot_service.service.handler.AbstractHandler;
 import ru.dexsys.domain.entity.UserEntity;
 
 import java.io.Serializable;
@@ -16,11 +17,12 @@ import java.util.List;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class UpdateReceiver {
+public class UpdateReceiverImpl implements IUpdateReceiver {
     private final List<AbstractHandler> handlers;
 
     private UserEntity user;
 
+    @Override
     public List<PartialBotApiMethod<? extends Serializable>> handle(Update update) {
         log.debug("Bot receive Update");
         try {

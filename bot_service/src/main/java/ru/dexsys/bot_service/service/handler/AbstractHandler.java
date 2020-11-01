@@ -1,4 +1,4 @@
-package ru.dexsys.bot_service.service.handler_impl;
+package ru.dexsys.bot_service.service.handler;
 
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.commands.BotCommand;

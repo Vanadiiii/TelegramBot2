@@ -1,4 +1,4 @@
-package ru.dexsys.bot_service.service.handler_impl;
+package ru.dexsys.bot_service.service.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -12,25 +12,22 @@ import java.util.List;
 
 @Component
 @Slf4j
-public class StartHandler extends AbstractHandler {
-    public StartHandler(UserService userService) {
-        super(Command.START, userService);
+public class HelpHandler extends AbstractHandler {
+    public HelpHandler(UserService userService) {
+        super(Command.HELP, userService);
     }
 
     @Override
     public List<PartialBotApiMethod<? extends Serializable>> handle(UserEntity user, String userText) {
-        log.info("User {} try to execute command '/start'", user.getName());
+        log.info("User {} try to execute command '/help'", user.getName());
         if (!userService.hasUser(user)) {
             userService.save(user);
             log.info("User #" + user.getId() + " was saved into storage");
         }
-        SendMessage message1 = new SendMessage()
+        SendMessage message = new SendMessage()
                 .setChatId(user.getChatId())
-                .setText("Hello! It's HappyBirthdayBot!\nI'll save your birthday and congratulate you)");
-        SendMessage message2 = new SendMessage()
-                .setChatId(user.getChatId())
-                .setText("Use '/help' command to see all commands");
-        return List.of(message1, message2);
+                .setText("Available command for you is '/birthday' to set birthday");
+        return List.of(message);
     }
 
     @Override

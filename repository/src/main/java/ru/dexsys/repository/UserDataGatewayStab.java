@@ -62,6 +62,14 @@ public class UserDataGatewayStab implements UserDataGateway {
     }
 
     @Override
+    public Optional<UserEntity> getUserByPhone(String phone) {
+        return storage.values()
+                .stream()
+                .filter(user -> phone.equals(user.getPhone()))
+                .findFirst();
+    }
+
+    @Override
     public void delete(Long id) {
         if (storage.containsKey(id)) {
             UserEntity user = storage.get(id);

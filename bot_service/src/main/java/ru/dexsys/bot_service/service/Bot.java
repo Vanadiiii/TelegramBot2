@@ -8,6 +8,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.dexsys.bot_service.service.bot_options.BotOptions;
+import ru.dexsys.bot_service.service.update_receiver.UpdateReceiverImpl;
 
 @Slf4j
 @Service
@@ -17,9 +18,9 @@ public class Bot extends TelegramLongPollingBot {
     @Value("${bot.token}")
     private String botToken;
 
-    private final UpdateReceiver updateReceiver;
+    private final IUpdateReceiver updateReceiver;
 
-    public Bot(UpdateReceiver updateReceiver, BotOptions botOptions) {
+    public Bot(UpdateReceiverImpl updateReceiver, BotOptions botOptions) {
         super(botOptions);
         this.updateReceiver = updateReceiver;
     }

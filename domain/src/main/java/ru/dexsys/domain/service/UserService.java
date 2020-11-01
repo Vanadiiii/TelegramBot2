@@ -27,6 +27,10 @@ public class UserService {
         return userDataGateway.getUserById(id);
     }
 
+    public Optional<UserEntity> getUserByPhone(String phone) {
+        return userDataGateway.getUserByPhone(phone);
+    }
+
     public void updateDay(long userid, int day) {
         userDataGateway.updateDay(userid, day);
     }

@@ -36,15 +36,29 @@ public class UserController {
 
     @GetMapping("/users/{id}")
     public ResponseEntity<?> getUserById(@PathVariable Long id) {
-        if (userService.hasUser(id)) {
+        try {
             return ResponseEntity.ok(
                     userService.getUser(id)
                             .map(userDtoMapper)
                             .orElseThrow(() -> NoSuchUserException.init(id))
             );
-        } else {
+        } catch (NoSuchUserException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("User #" + id + " not found");
+                    .body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/users/phone/{phone}")
+    public ResponseEntity<?> getUserByPhone(@PathVariable String phone) {
+        try {
+            return ResponseEntity.ok(
+                    userService.getUserByPhone(phone)
+                            .map(userDtoMapper)
+                            .orElseThrow(() -> new NoSuchUserException("There are no such user with phone - " + phone))
+            );
+        } catch (NoSuchUserException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(e.getMessage());
         }
     }
 
