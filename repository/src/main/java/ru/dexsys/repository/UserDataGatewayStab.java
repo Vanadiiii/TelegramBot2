@@ -62,7 +62,7 @@ public class UserDataGatewayStab implements UserDataGateway {
     }
 
     @Override
-    public Optional<UserEntity> getUserByPersonalData_Phone(String phone) {
+    public Optional<UserEntity> getUserByPhone(String phone) {
         return storage.values()
                 .stream()
                 .filter(user -> phone.equals(user.getPhone()))

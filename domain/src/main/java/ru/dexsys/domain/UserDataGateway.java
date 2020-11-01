@@ -13,7 +13,7 @@ public interface UserDataGateway {
 
     Optional<UserEntity> getUserById(long id);
 
-    Optional<UserEntity> getUserByPersonalData_Phone(String phone);
+    Optional<UserEntity> getUserByPhone(String phone);
 
     List<UserEntity> getUsers();
 

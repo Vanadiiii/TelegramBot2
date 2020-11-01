@@ -34,7 +34,7 @@ public interface UserDataRepository extends UserDataGateway, JpaRepository<UserE
     void updatePhone(@Param("id") long userId, @Param("phone") String phone);
 
     @Override
-    Optional<UserEntity> getUserByPersonalData_Phone(String phone);
+    Optional<UserEntity> getUserByPhone(String phone);
 
     @Override
     UserEntity save(UserEntity userEntity);

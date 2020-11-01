@@ -77,7 +77,7 @@ public class MockControllerImpl implements UserDataGateway {
     }
 
     @Override
-    public Optional<UserEntity> getUserByPersonalData_Phone(String phone) {
+    public Optional<UserEntity> getUserByPhone(String phone) {
         return getUsers().stream()
                 .filter(userEntity -> phone.equals(userEntity.getPhone()))
                 .findFirst();
