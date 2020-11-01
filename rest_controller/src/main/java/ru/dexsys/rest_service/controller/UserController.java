@@ -1,5 +1,6 @@
 package ru.dexsys.rest_service.controller;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -42,8 +43,8 @@ public class UserController {
         );
     }
 
-    @GetMapping("/users/phone/{phone}")
-    public ResponseEntity<?> getUserByPhone(@PathVariable String phone) {
+    @GetMapping("/users/findBy")
+    public ResponseEntity<?> getUserByPhone(@NonNull @RequestHeader String phone) {
         return ResponseEntity.ok(
                 userService.getUserByPhone(phone)
                         .map(userDtoMapper)
@@ -84,6 +85,7 @@ public class UserController {
     public ResponseEntity<UserDto> changeUserValues(
             @RequestHeader(required = false) Integer day,
             @RequestHeader(required = false) Integer month,
+            @RequestHeader(required = false) String phone,
             @PathVariable Long id
     ) {
         try {
@@ -92,6 +94,9 @@ public class UserController {
             }
             if (month != null) {
                 userService.updateMonth(id, month);
+            }
+            if (phone != null) {
+                userService.updatePhone(id, phone);
             }
             UserDto userDto = userService.getUser(id)
                     .map(userDtoMapper)

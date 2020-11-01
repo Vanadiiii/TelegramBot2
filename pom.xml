@@ -8,8 +8,8 @@
         <module>bot_service</module>
         <module>repository</module>
         <module>domain</module>
-        <module>rest_service</module>
-        <module>user_controller</module>
+        <module>rest_controller</module>
+        <module>mock_repository</module>
     </modules>
 
     <parent>
@@ -74,7 +74,12 @@
             </dependency>
             <dependency>
                 <groupId>ru.dexsys</groupId>
-                <artifactId>rest_service</artifactId>
+                <artifactId>mock_repository</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>ru.dexsys</groupId>
+                <artifactId>rest_controller</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>

@@ -16,7 +16,7 @@
         <swagger2.version>${swagger.version}</swagger2.version>
     </properties>
 
-    <artifactId>rest_service</artifactId>
+    <artifactId>rest_controller</artifactId>
 
     <dependencies>
         <dependency>
