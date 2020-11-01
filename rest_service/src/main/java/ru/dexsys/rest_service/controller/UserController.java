@@ -2,13 +2,12 @@ package ru.dexsys.rest_service.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.dexsys.domain.service.UserService;
 import ru.dexsys.rest_service.dto.UserDto;
-import ru.dexsys.rest_service.exception.NoSuchUserException;
+import ru.dexsys.rest_service.exception.UserNotFoundException;
 import ru.dexsys.rest_service.mapper.UserDataDtoMapper;
 import ru.dexsys.rest_service.mapper.UserDtoMapper;
 
@@ -36,40 +35,29 @@ public class UserController {
 
     @GetMapping("/users/{id}")
     public ResponseEntity<?> getUserById(@PathVariable Long id) {
-        try {
-            return ResponseEntity.ok(
-                    userService.getUser(id)
-                            .map(userDtoMapper)
-                            .orElseThrow(() -> NoSuchUserException.init(id))
-            );
-        } catch (NoSuchUserException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(e.getMessage());
-        }
+        return ResponseEntity.ok(
+                userService.getUser(id)
+                        .map(userDtoMapper)
+                        .orElseThrow(() -> UserNotFoundException.init(id))
+        );
     }
 
     @GetMapping("/users/phone/{phone}")
     public ResponseEntity<?> getUserByPhone(@PathVariable String phone) {
-        try {
-            return ResponseEntity.ok(
-                    userService.getUserByPhone(phone)
-                            .map(userDtoMapper)
-                            .orElseThrow(() -> new NoSuchUserException("There are no such user with phone - " + phone))
-            );
-        } catch (NoSuchUserException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(e.getMessage());
-        }
+        return ResponseEntity.ok(
+                userService.getUserByPhone(phone)
+                        .map(userDtoMapper)
+                        .orElseThrow(() -> new UserNotFoundException("There are no such user with phone - " + phone))
+        );
     }
 
     @DeleteMapping("/users/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
-        if (userService.hasUser(id)) {
+        try {
             userService.removeUser(id);
             return ResponseEntity.ok("User #" + id + " was removed from storage");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("User #" + id + " not found");
+        } catch (Exception e) {
+            throw UserNotFoundException.init(id);
         }
     }
 
@@ -83,13 +71,12 @@ public class UserController {
     public ResponseEntity<?> changeUser(
             @RequestBody UserDto userDto
     ) {
-        if (userService.hasUser(userDto.getId())) {
+        try {
             userService.removeUser(userDto.getId());
             userService.save(userDataDtoMapper.apply(userDto));
             return ResponseEntity.ok(userDto);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("User #" + userDto.getId() + " not found");
+        } catch (Exception e) {
+            throw UserNotFoundException.init(userDto.getId());
         }
     }
 
@@ -99,15 +86,19 @@ public class UserController {
             @RequestHeader(required = false) Integer month,
             @PathVariable Long id
     ) {
-        if (day != null) {
-            userService.updateDay(id, day);
+        try {
+            if (day != null) {
+                userService.updateDay(id, day);
+            }
+            if (month != null) {
+                userService.updateMonth(id, month);
+            }
+            UserDto userDto = userService.getUser(id)
+                    .map(userDtoMapper)
+                    .orElseThrow(() -> UserNotFoundException.init(id));
+            return ResponseEntity.ok(userDto);
+        } catch (Exception e) {
+            throw UserNotFoundException.init(id);
         }
-        if (month != null) {
-            userService.updateMonth(id, month);
-        }
-        UserDto userDto = userService.getUser(id)
-                .map(userDtoMapper)
-                .orElseThrow(() -> NoSuchUserException.init(id));
-        return ResponseEntity.ok(userDto);
     }
 }
