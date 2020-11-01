@@ -1,3 +1,5 @@
+server:
+  port: ${PORT}
 bot:
   name: HappyBirthdayCongratulationsBot
   token: 1379206109:AAHuXjCEs52KvF6xxmVvvZODRwn8EE0YQh8
