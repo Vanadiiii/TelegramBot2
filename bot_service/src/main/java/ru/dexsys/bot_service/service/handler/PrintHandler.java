@@ -8,8 +8,11 @@ import ru.dexsys.domain.entity.UserEntity;
 import ru.dexsys.domain.service.UserService;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Component
 @Slf4j
@@ -25,18 +28,17 @@ public class PrintHandler extends AbstractHandler {
             userService.save(user);
             log.info("User #" + user.getId() + " was saved into storage");
         }
-        SendMessage message = new SendMessage()
+        SendMessage title = new SendMessage()
                 .setChatId(user.getChatId())
                 .setText("There are all users:");
-        SendMessage usersInfo = new SendMessage()
-                .setChatId(user.getChatId())
-                .setText(
-                        userService.getUsers()
-                                .stream()
-                                .map(UserEntity::toString)
-                                .collect(Collectors.joining(";\n\n"))
-                );
-        return List.of(message, usersInfo);
+        List<SendMessage> messages = userService.getUsers()
+                .stream()
+                .map(UserEntity::toString)
+                .map(info -> new SendMessage(user.getChatId(), info))
+                .collect(toList());
+        messages.add(0, title);
+
+        return new ArrayList<>(messages);
     }
 
     @Override

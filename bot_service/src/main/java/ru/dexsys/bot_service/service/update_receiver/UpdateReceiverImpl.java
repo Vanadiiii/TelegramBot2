@@ -27,29 +27,21 @@ public class UpdateReceiverImpl implements IUpdateReceiver {
         log.debug("Bot receive Update");
         try {
             if (isCommand(update)) {
-                user = UserEntity.builder()
-                        .id((long) update.getMessage().getFrom().getId())
-                        .chatId(update.getMessage().getChatId())
-                        .name(update.getMessage().getFrom().getUserName())
-                        .build();
-                String data = update.getMessage().getText();
+                user = createFromMessage(update);
+                String data = update.getMessage()
+                        .getText()
+                        .replace("/", "");
                 return getHandlerByCommand(data).handle(user, data);
 
             } else if (update.hasMessage() && update.getMessage().hasContact()) {
-                user = UserEntity.builder()
-                        .id((long) update.getMessage().getFrom().getId())
-                        .chatId(update.getMessage().getChatId())
-                        .name(update.getMessage().getFrom().getUserName())
-                        .build();
-                String data = update.getMessage().getContact().getPhoneNumber();
+                user = createFromMessage(update);
+                String data = update.getMessage()
+                        .getContact()
+                        .getPhoneNumber();
                 return getHandlerForSavingContact().handle(user, data);
 
             } else if (update.hasCallbackQuery()) {
-                user = UserEntity.builder()
-                        .id((long) update.getCallbackQuery().getFrom().getId())
-                        .chatId(update.getCallbackQuery().getMessage().getChatId())
-                        .name(update.getCallbackQuery().getFrom().getUserName())
-                        .build();
+                user = createFromCallback(update);
                 String data = update.getCallbackQuery().getData();
                 return getHandlerByCallBackQuery(data).handle(user, data);
             } else {
@@ -59,6 +51,26 @@ public class UpdateReceiverImpl implements IUpdateReceiver {
             log.info("User {} try to execute unsupported operation", user.getName());
         }
         return List.of(new SendMessage(user.getChatId(), "Unsupported operation. Use /help to see all commands"));
+    }
+
+    private UserEntity createFromCallback(Update update) {
+        return UserEntity.builder()
+                .id((long) update.getCallbackQuery().getFrom().getId())
+                .chatId(update.getCallbackQuery().getMessage().getChatId())
+                .name(update.getCallbackQuery().getFrom().getUserName())
+                .build()
+                .setFirstName(update.getCallbackQuery().getFrom().getFirstName())
+                .setSecondName(update.getCallbackQuery().getFrom().getLastName());
+    }
+
+    private UserEntity createFromMessage(Update update) {
+        return UserEntity.builder()
+                .id((long) update.getMessage().getFrom().getId())
+                .chatId(update.getMessage().getChatId())
+                .name(update.getMessage().getFrom().getUserName())
+                .build()
+                .setFirstName(update.getMessage().getFrom().getFirstName())
+                .setSecondName(update.getMessage().getFrom().getLastName());
     }
 
     private AbstractHandler getHandlerForSavingContact() {
@@ -71,7 +83,7 @@ public class UpdateReceiverImpl implements IUpdateReceiver {
     private AbstractHandler getHandlerByCommand(@NonNull String command) {
         return handlers.stream()
                 .filter(AbstractHandler::isUserCommand)
-                .filter(handler -> command.contains(handler.getCommand()))
+                .filter(handler -> command.equals(handler.getCommand()))
                 .findFirst()
                 .orElseThrow(UnsupportedOperationException::new);
     }

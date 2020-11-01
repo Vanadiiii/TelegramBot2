@@ -1,17 +1,21 @@
 package ru.dexsys.domain.entity;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Accessors(chain = true)
 public class UserEntity {
     private Long id;
     private String name;
     private Long chatId;
     private Birthday birthday;
     private String phone;
+    private String firstName;
+    private String secondName;
 
     public UserEntity(long id, String name, long chatId) {
         this.id = id;
@@ -26,6 +30,8 @@ public class UserEntity {
                 ", name = '" + name + '\'' +
                 ", chatId = " + chatId +
                 ", birthday = " + birthday +
+                ", firstName = '" + firstName + '\'' +
+                ", secondName = '" + secondName + '\'' +
                 ", phone = '" + phone + '\'' +
                 '}';
     }

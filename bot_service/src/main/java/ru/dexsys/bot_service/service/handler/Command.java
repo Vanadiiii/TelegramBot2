@@ -13,6 +13,7 @@ public enum Command {
     SET_MONTH("save your birthday month"),
     SAVE_PHONE("save your phone"),
     PRINT("print all users"),
+    PRINT_MOCK("print all users from mock-controller"),
     INFO("show your info"),
     GET_PHONE("get your phone for receiving the congratulations"),
     ;

@@ -1,8 +1,6 @@
 package ru.dexsys.repository;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -18,8 +16,6 @@ import java.util.Optional;
 
 @Repository
 @Transactional
-@Primary
-@Lazy
 @ConditionalOnProperty(value = "repository.type", havingValue = "jpa")
 public interface UserDataRepository extends UserDataGateway, JpaRepository<UserEntity, Long> {
     @Override
@@ -36,6 +32,9 @@ public interface UserDataRepository extends UserDataGateway, JpaRepository<UserE
     @Modifying
     @Query("update UserEntity u set u.phone = :phone where u.id = :id")
     void updatePhone(@Param("id") long userId, @Param("phone") String phone);
+
+    @Override
+    Optional<UserEntity> getUserByPersonalData_Phone(String phone);
 
     @Override
     UserEntity save(UserEntity userEntity);

@@ -16,6 +16,8 @@ http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
             <basic name="chatId"/>
             <basic name="name" optional="true"/>
             <basic name="phone" optional="true"/>
+            <basic name="firstName" optional="true"/>
+            <basic name="secondName" optional="true"/>
             <embedded name="birthday">
                 <attribute-override name="day">
                     <column name="day" nullable="true"/>

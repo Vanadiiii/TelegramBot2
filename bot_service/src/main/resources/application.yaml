@@ -9,6 +9,4 @@ proxy:
   port: 9150
   type: socks4
 repository:
-  type: jpa
-user-client:
-  isMock: false
+  type: mock

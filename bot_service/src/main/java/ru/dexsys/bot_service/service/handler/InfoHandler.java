@@ -24,9 +24,11 @@ public class InfoHandler extends AbstractHandler {
             userService.save(user);
             log.info("User #" + user.getId() + " was saved into storage");
         }
+        UserEntity savedUser = userService.getUser(user.getId())
+                .orElseThrow(() -> new RuntimeException("Not found User #" + user.getId()));
         SendMessage message = new SendMessage()
                 .setChatId(user.getChatId())
-                .setText("Your info:\n" + user.toString());
+                .setText("Your info:\n" + savedUser);
         return List.of(message);
     }
 
