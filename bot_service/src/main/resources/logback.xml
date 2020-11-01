@@ -18,9 +18,9 @@
         </encoder>
     </appender>
 
-    <logger name="org.springframework" level="warn"/>
+    <logger name="org.springframework" level="info"/>
     <logger name="org.hibernate" level="warn"/>
-    <logger name="org.apache" level="warn"/>
+    <logger name="org.apache" level="info"/>
     <logger name="com.zaxxer.hikari" level="warn"/>
 
     <root level="info">
