@@ -6,7 +6,6 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -37,14 +36,21 @@ public class TelegramKeyboardCreator {
         );
     }
 
-    public static ReplyKeyboardMarkup savePhoneReplyKeyboard(String text) {
+    public static ReplyKeyboardMarkup savePhoneReplyKeyboard(String sendDataText, String writePhoneText) {
         KeyboardButton button = new KeyboardButton()
-                .setText(text)
+                .setText(sendDataText)
                 .setRequestContact(true);
-        KeyboardRow row = new KeyboardRow();
-        List<KeyboardRow> keyboard = new ArrayList<>();
-        row.add(button);
-        keyboard.add(row);
+        KeyboardButton button2 = new KeyboardButton()
+                .setText(writePhoneText);
+
+        List<KeyboardRow> keyboard = Stream.of(button, button2)
+                .map(btn -> {
+                    KeyboardRow keyboardRow = new KeyboardRow();
+                    keyboardRow.add(btn);
+                    return keyboardRow;
+                })
+                .collect(Collectors.toList());
+
         return new ReplyKeyboardMarkup()
                 .setSelective(true)
                 .setResizeKeyboard(true)

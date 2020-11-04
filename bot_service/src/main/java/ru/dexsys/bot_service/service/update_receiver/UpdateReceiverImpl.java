@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.PartialBotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.dexsys.bot_service.service.IUpdateReceiver;
 import ru.dexsys.bot_service.service.handler.AbstractHandler;
@@ -13,6 +14,7 @@ import ru.dexsys.domain.entity.UserEntity;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Component
@@ -33,17 +35,24 @@ public class UpdateReceiverImpl implements IUpdateReceiver {
                         .replace("/", "");
                 return getHandlerByCommand(data).handle(user, data);
 
-            } else if (update.hasMessage() && update.getMessage().hasContact()) {
+            } else if (isSavingPhoneAction(update)) {
                 user = createFromMessage(update);
-                String data = update.getMessage()
-                        .getContact()
-                        .getPhoneNumber();
-                return getHandlerForSavingContact().handle(user, data);
+                String data;
+                if (update.getMessage().hasContact()) {
+                    data = update.getMessage()
+                            .getContact()
+                            .getPhoneNumber();
+                } else {
+                    data = update.getMessage().getText();
+                }
+                return getHandlerForSavingPhone().handle(user, data);
 
             } else if (update.hasCallbackQuery()) {
                 user = createFromCallback(update);
                 String data = update.getCallbackQuery().getData();
                 return getHandlerByCallBackQuery(data).handle(user, data);
+            } else if (isSkipping(update)) {
+                return List.of();
             } else {
                 throw new UnsupportedOperationException();
             }
@@ -55,8 +64,7 @@ public class UpdateReceiverImpl implements IUpdateReceiver {
 
     private UserEntity createFromCallback(Update update) {
         return UserEntity.builder()
-                .id((long) update.getCallbackQuery().getFrom().getId())
-                .chatId(update.getCallbackQuery().getMessage().getChatId())
+                .chatId((long) update.getCallbackQuery().getFrom().getId())
                 .name(update.getCallbackQuery().getFrom().getUserName())
                 .build()
                 .setFirstName(update.getCallbackQuery().getFrom().getFirstName())
@@ -65,19 +73,11 @@ public class UpdateReceiverImpl implements IUpdateReceiver {
 
     private UserEntity createFromMessage(Update update) {
         return UserEntity.builder()
-                .id((long) update.getMessage().getFrom().getId())
-                .chatId(update.getMessage().getChatId())
+                .chatId((long) update.getMessage().getFrom().getId())
                 .name(update.getMessage().getFrom().getUserName())
                 .build()
                 .setFirstName(update.getMessage().getFrom().getFirstName())
                 .setSecondName(update.getMessage().getFrom().getLastName());
-    }
-
-    private AbstractHandler getHandlerForSavingContact() {
-        return handlers.stream()
-                .filter(handler -> handler.getCommand().equals("save_phone"))
-                .findFirst()
-                .orElseThrow();
     }
 
     private AbstractHandler getHandlerByCommand(@NonNull String command) {
@@ -96,7 +96,32 @@ public class UpdateReceiverImpl implements IUpdateReceiver {
                 .orElseThrow(UnsupportedOperationException::new);
     }
 
+    private AbstractHandler getHandlerForSavingPhone() {
+        return handlers.stream()
+                .filter(handler -> handler.getCommand().equals("check_phone"))
+                .findFirst()
+                .orElseThrow();
+    }
+
+    private boolean isSkipping(Update update) {
+        List<String> skippingMessages = List.of("Write your phone");
+        return Optional.ofNullable(update.getMessage())
+                .map(Message::getText)
+                .map(skippingMessages::contains)
+                .orElse(false);
+    }
+
     private boolean isCommand(Update update) {
-        return update.hasMessage() && update.getMessage().isCommand();
+        return Optional.ofNullable(update.getMessage())
+                .map(Message::isCommand)
+                .orElse(false);
+    }
+
+    private boolean isSavingPhoneAction(Update update) {
+        return Optional.ofNullable(update.getMessage())
+                .map(message -> message.hasContact()
+                        || message.getText().matches("^[1-9]\\d{0,2}\\d{10}$")
+                )
+                .orElse(false);
     }
 }

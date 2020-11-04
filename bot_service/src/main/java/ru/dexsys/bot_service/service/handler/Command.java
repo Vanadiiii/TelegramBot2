@@ -12,10 +12,11 @@ public enum Command {
     SET_DAY("save your birthday day"),
     SET_MONTH("save your birthday month"),
     SAVE_PHONE("save your phone"),
+    AUTHORIZE_BY_PHONE("check your authorization by phone"),
+    CHECK_PHONE("check your phone in corporate storage"),
     PRINT("print all users"),
-    PRINT_MOCK("print all users from mock-controller"),
     INFO("show your info"),
-    GET_PHONE("get your phone for receiving the congratulations"),
+    SUCCESS("successfully finish of your congratulations process"),
     ;
 
     private final String description;

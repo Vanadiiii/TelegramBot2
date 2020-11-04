@@ -13,7 +13,6 @@
 
     <properties>
         <easy-random.version>4.0.0</easy-random.version>
-        <mapstruct.version>1.4.1.Final</mapstruct.version>
     </properties>
 
     <dependencies>
@@ -33,7 +32,6 @@
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
-            <version>${mapstruct.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

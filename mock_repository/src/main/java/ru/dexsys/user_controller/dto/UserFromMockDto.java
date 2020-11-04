@@ -12,7 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class UserDto2 {
+public class UserFromMockDto {
     private UUID id;
     private String firstName;
     private String secondName;

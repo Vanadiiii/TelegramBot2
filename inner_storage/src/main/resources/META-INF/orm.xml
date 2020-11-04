@@ -7,7 +7,7 @@ http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
     <description>My First JPA XML Application</description>
     <package>ru.dexsys.domain.entity</package>
     <entity class="ru.dexsys.domain.entity.UserEntity">
-        <table name="USERS"/>
+        <table name="USERS_TEMP"/>
         <attributes>
             <id name="chatId">
                 <column updatable="false" insertable="true" name="chat_id"/>

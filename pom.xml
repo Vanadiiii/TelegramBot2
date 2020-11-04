@@ -10,6 +10,7 @@
         <module>domain</module>
         <module>rest_controller</module>
         <module>mock_repository</module>
+        <module>inner_storage</module>
     </modules>
 
     <parent>
@@ -28,6 +29,7 @@
     <properties>
         <java.version>11</java.version>
         <swagger.version>3.0.0</swagger.version>
+        <mapstruct.version>1.4.1.Final</mapstruct.version>
     </properties>
 
     <dependencies>
@@ -83,9 +85,19 @@
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>
+                <groupId>ru.dexsys</groupId>
+                <artifactId>inner_storage</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-boot-starter</artifactId>
                 <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

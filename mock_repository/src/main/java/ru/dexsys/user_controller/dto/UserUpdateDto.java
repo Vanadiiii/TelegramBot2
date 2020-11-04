@@ -1,4 +1,4 @@
-package ru.dexsys.rest_service.dto;
+package ru.dexsys.user_controller.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,9 +11,8 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class UserDto {
-    private Long chatId;
-    private String name;
-    private Date birthday;
+public class UserUpdateDto {
+    private Date birthDay;
+    private String chatId;
     private String phone;
 }

@@ -7,21 +7,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public interface UserDataGateway {
+public interface IUserTempDataGateway {
 
     UserEntity save(UserEntity userEntity);
 
-    Optional<UserEntity> getUserById(long id);
+    Optional<UserEntity> getUserByChatId(long id);
 
     Optional<UserEntity> getUserByPhone(String phone);
 
     List<UserEntity> getUsers();
 
-    void updateDay(Long id, int day);
-
-    void updateMonth(Long id, int day);
-
-    void updatePhone(long userId, String phone);
-
-    void delete(Long id);
+    void delete(long id);
 }

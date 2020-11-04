@@ -22,6 +22,7 @@
     <logger name="org.hibernate" level="warn"/>
     <logger name="org.apache" level="warn"/>
     <logger name="com.zaxxer.hikari" level="warn"/>
+    <!--todo - set h2-logger to warn level-->
 
     <root level="info">
         <appender-ref ref="STDOUT"/>

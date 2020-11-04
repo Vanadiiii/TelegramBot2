@@ -9,38 +9,45 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>repository</artifactId>
+    <artifactId>inner_storage</artifactId>
 
     <properties>
-        <postgresql.version>42.2.16</postgresql.version>
+        <h2.version>1.4.200</h2.version>
+        <liquibase.version>4.1.1</liquibase.version>
         <snakeyaml.version>1.27</snakeyaml.version>
-        <easy-random.version>4.0.0</easy-random.version>
     </properties>
 
     <dependencies>
         <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>${postgresql.version}</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.liquibase</groupId>-->
+<!--            <artifactId>liquibase-core</artifactId>-->
+<!--            <version>${liquibase.version}</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.yaml/snakeyaml -->
         <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
             <version>${snakeyaml.version}</version>
         </dependency>
         <dependency>
-            <groupId>ru.dexsys</groupId>
-            <artifactId>domain</artifactId>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.jeasy</groupId>
-            <artifactId>easy-random-core</artifactId>
-            <version>${easy-random.version}</version>
+            <groupId>ru.dexsys</groupId>
+            <artifactId>domain</artifactId>
         </dependency>
     </dependencies>
 

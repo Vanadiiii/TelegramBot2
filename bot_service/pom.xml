@@ -55,6 +55,10 @@
         </dependency>
         <dependency>
             <groupId>ru.dexsys</groupId>
+            <artifactId>inner_storage</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ru.dexsys</groupId>
             <artifactId>mock_repository</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>

@@ -6,12 +6,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.dexsys.domain.service.UserService;
+import ru.dexsys.domain.IUserDomainService;
 import ru.dexsys.rest_service.dto.UserDto;
 import ru.dexsys.rest_service.exception.UserNotFoundException;
 import ru.dexsys.rest_service.mapper.UserDataDtoMapper;
 import ru.dexsys.rest_service.mapper.UserDtoMapper;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class UserController {
-    private final UserService userService;
+    private final IUserDomainService userService;
     private final UserDtoMapper userDtoMapper;
     private final UserDataDtoMapper userDataDtoMapper;
 
@@ -34,12 +35,12 @@ public class UserController {
         );
     }
 
-    @GetMapping("/users/{id}")
-    public ResponseEntity<?> getUserById(@PathVariable Long id) {
+    @GetMapping("/users/{chatId}")
+    public ResponseEntity<?> getUserByChatId(@PathVariable Long chatId) {
         return ResponseEntity.ok(
-                userService.getUser(id)
+                userService.getUser(chatId)
                         .map(userDtoMapper)
-                        .orElseThrow(() -> UserNotFoundException.init(id))
+                        .orElseThrow(() -> UserNotFoundException.init(chatId))
         );
     }
 
@@ -52,58 +53,54 @@ public class UserController {
         );
     }
 
-    @DeleteMapping("/users/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+    @DeleteMapping("/users/{chatId}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long chatId) {
         try {
-            userService.removeUser(id);
-            return ResponseEntity.ok("User #" + id + " was removed from storage");
+            userService.removeFromTemp(chatId);
+            return ResponseEntity.ok("User #" + chatId + " was removed from storage");
         } catch (Exception e) {
-            throw UserNotFoundException.init(id);
+            throw UserNotFoundException.init(chatId);
         }
     }
 
     @PostMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDto> addUser(@RequestBody UserDto userDto) {
-        userService.save(userDataDtoMapper.apply(userDto));
+        userService.saveToTemp(userDataDtoMapper.apply(userDto));
         return ResponseEntity.ok(userDto);
     }
 
-    @PatchMapping(value = "/users/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PatchMapping(value = "/users/{chatId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> changeUser(
             @RequestBody UserDto userDto
     ) {
         try {
-            userService.removeUser(userDto.getId());
-            userService.save(userDataDtoMapper.apply(userDto));
+            userService.removeFromTemp(userDto.getChatId());
+            userService.saveToTemp(userDataDtoMapper.apply(userDto));
             return ResponseEntity.ok(userDto);
         } catch (Exception e) {
-            throw UserNotFoundException.init(userDto.getId());
+            throw UserNotFoundException.init(userDto.getChatId());
         }
     }
 
-    @PutMapping("/users/{id}")
+    @PutMapping("/users/{chatId}")
     public ResponseEntity<UserDto> changeUserValues(
-            @RequestHeader(required = false) Integer day,
-            @RequestHeader(required = false) Integer month,
+            @RequestHeader(required = false) Date birthday,
             @RequestHeader(required = false) String phone,
-            @PathVariable Long id
+            @PathVariable Long chatId
     ) {
         try {
-            if (day != null) {
-                userService.updateDay(id, day);
-            }
-            if (month != null) {
-                userService.updateMonth(id, month);
+            if (birthday != null) {
+                userService.updateBirthday(chatId, birthday);
             }
             if (phone != null) {
-                userService.updatePhone(id, phone);
+                userService.updatePhone(chatId, phone);
             }
-            UserDto userDto = userService.getUser(id)
+            UserDto userDto = userService.getUser(chatId)
                     .map(userDtoMapper)
-                    .orElseThrow(() -> UserNotFoundException.init(id));
+                    .orElseThrow(() -> UserNotFoundException.init(chatId));
             return ResponseEntity.ok(userDto);
         } catch (Exception e) {
-            throw UserNotFoundException.init(id);
+            throw UserNotFoundException.init(chatId);
         }
     }
 }
