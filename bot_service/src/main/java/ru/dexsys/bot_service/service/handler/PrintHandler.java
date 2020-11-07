@@ -28,7 +28,9 @@ public class PrintHandler extends AbstractHandler {
         if (!userService.hasUser(user.getChatId())) {
             userService.saveToTemp(user);
             log.info("User #" + user.getChatId() + " was saved into temp storage");
-            usersInfo = List.of(new SendMessage(user.getChatId(), user.toString()));
+            usersInfo = new ArrayList<>() {{
+                this.add(new SendMessage(user.getChatId(), user.toString()));
+            }};
         } else {
             usersInfo = userService.getUsers()
                     .stream()

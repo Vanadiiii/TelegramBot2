@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="imatveev" id="2020-11-05--01-init-db">
+        <createTable tableName="inner_db">
+            <column name="chat_id" type="integer">
+                <constraints primaryKey="true" unique="true" nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar(60)"/>
+            <column name="second_name" type="varchar(60)"/>
+            <column name="name" type="varchar(60)"/>
+            <column name="birthday" type="datetime(36)"/>
+            <column name="phone" type="varchar(20)"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

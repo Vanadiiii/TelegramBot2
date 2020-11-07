@@ -12,3 +12,6 @@ proxy:
   type: socks4
 repository:
   type: mock
+spring:
+  profiles:
+    active: dev

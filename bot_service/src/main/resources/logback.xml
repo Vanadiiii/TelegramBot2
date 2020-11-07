@@ -22,7 +22,7 @@
     <logger name="org.hibernate" level="warn"/>
     <logger name="org.apache" level="warn"/>
     <logger name="com.zaxxer.hikari" level="warn"/>
-    <!--todo - set h2-logger to warn level-->
+    <logger name="liquibase" level="warn"/>
 
     <root level="info">
         <appender-ref ref="STDOUT"/>

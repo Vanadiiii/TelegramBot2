@@ -41,7 +41,8 @@ public class UserEntity {
     }
 
     private String birthdayToString() {
-        return new SimpleDateFormat("MMMM dd", Locale.UK)
-                .format(birthday);
+        return (birthday != null)
+                ? new SimpleDateFormat("MMMM dd", Locale.UK).format(birthday)
+                : null;
     }
 }

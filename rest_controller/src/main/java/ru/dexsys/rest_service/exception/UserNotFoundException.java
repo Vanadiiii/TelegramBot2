@@ -11,4 +11,8 @@ public class UserNotFoundException extends RuntimeException {
     public static UserNotFoundException init(Long id) {
         return new UserNotFoundException("There are no such user with id - " + id);
     }
+
+    public static UserNotFoundException init(String phone) {
+        return new UserNotFoundException("There are no such user with phone - " + phone);
+    }
 }

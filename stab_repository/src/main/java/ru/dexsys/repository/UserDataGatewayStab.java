@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import ru.dexsys.domain.IUserDataGateway;
 import ru.dexsys.domain.entity.UserEntity;
 
+import javax.annotation.PostConstruct;
 import java.util.*;
 
 @Repository
@@ -15,6 +16,18 @@ import java.util.*;
 @ConditionalOnProperty(value = "repository.type", havingValue = "stab")
 public class UserDataGatewayStab implements IUserDataGateway {
     private final Map<Long, UserEntity> storage = new HashMap<>();
+
+    @PostConstruct
+    private void initStorage() {
+        storage.put(
+                -1L,
+                UserEntity.builder()
+                        .firstName("Иван")
+                        .secondName("Матвеев")
+                        .phone("89127684213")
+                        .build()
+        );
+    }
 
     @Override
     public List<UserEntity> getUsers() {

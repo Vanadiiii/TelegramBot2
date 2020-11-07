@@ -11,6 +11,7 @@ import ru.dexsys.domain.entity.UserEntity;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 @Data
 @Slf4j
@@ -41,7 +42,9 @@ public class UserDomainServiceImpl implements IUserDomainService {
      * <p2>find user from permanent storage only</p2>
      */
     public Optional<UserEntity> getUser(long id) {
-        return userDataGateway.getUserByChatId(id);
+        if (userDataGateway.getUserByChatId(id).isPresent()){
+            return userDataGateway.getUserByChatId(id);
+        } else return userTempDataGateway.getUserByChatId(id);
     }
 
     public Optional<UserEntity> getUserByPhone(String phone) {
