@@ -12,8 +12,7 @@
 
     <properties>
         <mapstruct.version>1.4.1.Final</mapstruct.version>
-        <skip.assembly>false</skip.assembly>
-        <swagger2.version>${swagger.version}</swagger2.version>
+        <easy-random.version>4.0.0</easy-random.version>
     </properties>
 
     <artifactId>rest_controller</artifactId>
@@ -35,6 +34,11 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jeasy</groupId>
+            <artifactId>easy-random-core</artifactId>
+            <version>${easy-random.version}</version>
         </dependency>
     </dependencies>
 

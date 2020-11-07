@@ -6,11 +6,11 @@
 
     <modules>
         <module>bot_service</module>
-        <module>repository</module>
         <module>domain</module>
-        <module>rest_controller</module>
-        <module>mock_repository</module>
         <module>inner_storage</module>
+        <module>mock_repository</module>
+        <module>rest_controller</module>
+        <module>stab_repository</module>
     </modules>
 
     <parent>
@@ -29,6 +29,7 @@
     <properties>
         <java.version>11</java.version>
         <swagger.version>3.0.0</swagger.version>
+        <easy-random.version>4.0.0</easy-random.version>
         <mapstruct.version>1.4.1.Final</mapstruct.version>
     </properties>
 
@@ -98,6 +99,11 @@
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
                 <version>${mapstruct.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jeasy</groupId>
+                <artifactId>easy-random-core</artifactId>
+                <version>${easy-random.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

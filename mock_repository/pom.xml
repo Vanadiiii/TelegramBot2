@@ -11,15 +11,10 @@
 
     <artifactId>mock_repository</artifactId>
 
-    <properties>
-        <easy-random.version>4.0.0</easy-random.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.jeasy</groupId>
             <artifactId>easy-random-core</artifactId>
-            <version>${easy-random.version}</version>
         </dependency>
         <dependency>
             <groupId>ru.dexsys</groupId>

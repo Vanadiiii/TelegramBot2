@@ -11,7 +11,4 @@
 
     <artifactId>domain</artifactId>
 
-    <properties>
-        <skip.assembly>false</skip.assembly>
-    </properties>
 </project>
