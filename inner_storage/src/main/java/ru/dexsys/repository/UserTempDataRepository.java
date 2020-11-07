@@ -1,14 +1,12 @@
 package ru.dexsys.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import ru.dexsys.domain.IUserTempDataGateway;
 import ru.dexsys.domain.entity.UserEntity;
 
 import java.util.List;
 import java.util.Optional;
 
-@EnableJpaRepositories
 public interface UserTempDataRepository extends IUserTempDataGateway, JpaRepository<UserEntity, Long> {
     @Override
     UserEntity save(UserEntity userEntity);
