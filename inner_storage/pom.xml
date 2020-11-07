@@ -11,16 +11,10 @@
 
     <artifactId>inner_storage</artifactId>
 
-    <properties>
-        <h2.version>1.4.200</h2.version>
-        <snakeyaml.version>1.27</snakeyaml.version>
-    </properties>
-
     <dependencies>
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>${h2.version}</version>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
         </dependency>
         <dependency>
             <groupId>org.liquibase</groupId>
