@@ -19,7 +19,7 @@ public class StartHandler extends AbstractHandler {
 
     @Override
     public List<PartialBotApiMethod<? extends Serializable>> handle(UserEntity user, String userText) {
-        log.info("User {} execute command '/start'", user.getName());
+        log.info("User {} execute command '/start'", user.getChatId());
         if (!userService.hasUser(user.getChatId())) {
             userService.saveToTemp(user);
         }

@@ -33,10 +33,6 @@
             <artifactId>hibernate-envers</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-        </dependency>
-        <dependency>
             <groupId>ru.dexsys</groupId>
             <artifactId>domain</artifactId>
         </dependency>
