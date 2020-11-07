@@ -6,7 +6,7 @@
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
     <changeSet author="imatveev" id="2020-11-05--01-init-db">
-        <createTable tableName="inner_db">
+        <createTable tableName="users_temp">
             <column name="chat_id" type="integer">
                 <constraints primaryKey="true" unique="true" nullable="false"/>
             </column>
