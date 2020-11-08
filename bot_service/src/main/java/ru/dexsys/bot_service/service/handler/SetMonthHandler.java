@@ -25,7 +25,7 @@ public class SetMonthHandler extends AbstractHandler {
 
     @Override
     public List<PartialBotApiMethod<? extends Serializable>> handle(UserEntity user, String userText) {
-        log.info("User #{} try to execute command '/set_month'", user.getChatId());
+        log.info("User #{} execute command '/set_month'", user.getChatId());
 
         List<String> listOfMonth = EnumSet.allOf(Month.class)
                 .stream()

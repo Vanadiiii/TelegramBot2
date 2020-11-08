@@ -19,9 +19,10 @@ public class StartHandler extends AbstractHandler {
 
     @Override
     public List<PartialBotApiMethod<? extends Serializable>> handle(UserEntity user, String userText) {
-        log.info("User {} execute command '/start'", user.getChatId());
+        log.info("User #{} execute command '/start'", user.getChatId());
         if (!userService.hasUser(user.getChatId())) {
             userService.saveToTemp(user);
+            log.info("User #{} is unauthorized", user.getChatId());
         }
         SendMessage message1 = new SendMessage()
                 .setChatId(user.getChatId())

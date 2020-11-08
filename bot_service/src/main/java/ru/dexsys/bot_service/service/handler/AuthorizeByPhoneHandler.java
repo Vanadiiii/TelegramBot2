@@ -24,7 +24,7 @@ public class AuthorizeByPhoneHandler extends AbstractHandler {
 
         ReplyKeyboardMarkup markup = TelegramKeyboardCreator.savePhoneReplyKeyboard(
                 "Send your phone automatically",
-                "Write your phone"
+                "Write your phone\nonly digits, please"
         );
         SendMessage message = new SendMessage()
                 .setChatId(user.getChatId())

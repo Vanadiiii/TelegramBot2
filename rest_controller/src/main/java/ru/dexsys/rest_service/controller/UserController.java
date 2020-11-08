@@ -61,7 +61,7 @@ public class UserController {
         return ResponseEntity.ok(userDto);
     }
 
-    @PatchMapping(value = "/users/{chatId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PatchMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateUser(
             @RequestBody UserDto userDto
     ) {

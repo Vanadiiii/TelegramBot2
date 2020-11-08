@@ -70,9 +70,13 @@ public class MockControllerImpl implements IUserDataGateway {
     @Override
     public void updateChatId(String phone, long chatId) {
         UserFromMockDto user = getUsersWithoutMapping().stream()
-                .filter(userDto -> phone.equals(
-                        userDto.getPhone().replaceAll("\\D", "")
-                ))
+                .filter(
+                        userDto -> Optional.ofNullable(userDto)
+                                .map(UserFromMockDto::getPhone)
+                                .map(phn -> phn.replaceAll("\\D", ""))
+                                .map(phn -> phn.equals(phone))
+                                .orElse(false)
+                )
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("There are no User #" + chatId));
         String ENDPOINT = "/" + user.getId();
@@ -101,7 +105,11 @@ public class MockControllerImpl implements IUserDataGateway {
 
     @Override
     public void updateBirthday(Long chatId, Date birthday) {
-        String ENDPOINT = "/" + chatId;
+        UserFromMockDto user = getUsersWithoutMapping().stream()
+                .filter(userDto -> String.valueOf(chatId).equals(userDto.getChatId()))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("There are no User #" + chatId));
+        String ENDPOINT = "/" + user.getId();
         String phone = getUserByChatId(chatId)
                 .map(UserEntity::getPhone)
                 .orElseThrow(() -> new RuntimeException("There are no such User #" + chatId));

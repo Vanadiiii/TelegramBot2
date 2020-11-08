@@ -32,6 +32,8 @@ public class SuccessHandler extends AbstractHandler {
 
         userService.updateBirthday(user.getChatId(), birthday);
 
+        log.info("User #{} save his birthday to corporate storage- '{}'", user.getChatId(), birthday);
+
         return List.of(new SendMessage()
                 .setChatId(user.getChatId())
                 .setText("SUCCESS!\n Now, relax and wait the congratulations)")

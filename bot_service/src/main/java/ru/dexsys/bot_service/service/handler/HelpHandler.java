@@ -19,13 +19,14 @@ public class HelpHandler extends AbstractHandler {
 
     @Override
     public List<PartialBotApiMethod<? extends Serializable>> handle(UserEntity user, String userText) {
-        log.info("User {} try to execute command '/help'", user.getName());
+        log.info("User #{} execute command '/help'", user.getChatId());
 
         SendMessage message = new SendMessage().setChatId(user.getChatId());
 
         String text;
         if (!userService.hasUser(user.getChatId())) {
             userService.saveToTemp(user);
+            log.info("User #{} is unauthorized", user.getChatId());
             text = "Available command for you is '/authorize_by_phone' to check your identity";
         } else {
             text = "Available command for you is '/birthday' to set birthday";
